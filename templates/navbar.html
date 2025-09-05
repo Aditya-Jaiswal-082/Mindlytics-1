@@ -1,0 +1,17 @@
+<nav class="navbar">
+  <div class="navbar-brand">
+    <a href="{{ url_for('index') }}">Mindlytics</a>
+  </div>
+  <ul class="navbar-menu">
+    <li><a href="{{ url_for('index') }}">Home</a></li>
+    {% if current_user.is_authenticated %}
+      <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+      <li><a href="{{ url_for('survey') }}">Survey</a></li>
+      <li><a href="{{ url_for('chatbot') }}">Chatbot</a></li>
+      <li><a href="{{ url_for('logout') }}" class="logout">Logout</a></li>
+    {% else %}
+      <li><a href="{{ url_for('login') }}">Login</a></li>
+      <li><a href="{{ url_for('signup') }}">Sign Up</a></li>
+    {% endif %}
+  </ul>
+</nav>

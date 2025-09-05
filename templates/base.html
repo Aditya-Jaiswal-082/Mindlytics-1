@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mental Health App</title>
+
+  <!-- Common styles for all pages -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='common.css') }}">
+
+  <!-- Page specific styles -->
+  {% block css %}{% endblock %}
+</head>
+<body>
+  {% include 'navbar.html' %}
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

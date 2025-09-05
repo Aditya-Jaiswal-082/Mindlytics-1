@@ -1,0 +1,62 @@
+/* Signup form styles */
+form {
+  max-width: 450px;
+  margin: 3rem auto;
+  background: #fff;
+  padding: 2.8rem 2.2rem;
+  border-radius: 20px;
+  box-shadow: 0 7px 25px rgba(67, 98, 243, 0.15);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+form h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #004d40;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  font-size: 1.1rem;
+  padding: 0.8rem 1.2rem;
+  margin-bottom: 1.6rem;
+  border: 2px solid #c1cee0;
+  border-radius: 12px;
+  background-color: #f9fafc;
+  transition: border-color 0.3s ease;
+  outline-offset: 2px;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+  border-color: #4a90e2;
+  box-shadow: 0 0 12px rgba(74, 144, 226, 0.6);
+  outline: none;
+}
+
+button {
+  width: 100%;
+  display: block;
+  padding: 1rem 0;
+  border: none;
+  border-radius: 30px;
+  font-size: 1.3rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: white;
+  background: linear-gradient(45deg, #4a90e2, #9013fe);
+  box-shadow: 0 4px 20px rgba(144, 19, 254, 0.6);
+  cursor: pointer;
+  transition: background 0.35s ease;
+}
+
+button:hover,
+button:focus {
+  background: linear-gradient(45deg, #9013fe, #4a90e2);
+  outline: none;
+}

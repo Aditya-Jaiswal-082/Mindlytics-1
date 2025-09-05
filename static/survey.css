@@ -1,0 +1,76 @@
+/* Survey form container */
+form {
+  max-width: 650px;
+  margin: 2rem auto;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 35px rgb(54 88 188 / 14%);
+  padding: 2.5rem 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+  gap: 1.8rem 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Survey heading */
+h2 {
+  grid-column: 1/-1;
+  text-align: center;
+  color: #023047;
+  font-weight: 800;
+  font-size: 2rem;
+  margin-bottom: 2.4rem;
+}
+
+/* Label styling */
+label {
+  display: block;
+  font-weight: 700;
+  color: #023047;
+  margin-bottom: 0.4rem;
+}
+
+/* Inputs and selects */
+input[type="text"],
+input[type="number"],
+select {
+  width: 100%;
+  padding: 0.6rem 1rem;
+  border: 2.8px solid #90caf9;
+  border-radius: 14px;
+  box-shadow: 0 4px 10px rgb(144 202 249 / 30%);
+  font-size: 1rem;
+  font-weight: 600;
+  color: #023047;
+  outline-offset: 3px;
+  transition: border-color 0.3s ease-out;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+select:focus {
+  border-color: #2196f3;
+  box-shadow: 0 0 15px #64b5f6cc;
+  outline: none;
+}
+
+/* Submit button */
+button[type="submit"] {
+  grid-column: 1/-1;
+  padding: 1rem 0;
+  border: none;
+  border-radius: 28px;
+  background: linear-gradient(135deg, #2196f3, #64b5f6);
+  color: white;
+  font-weight: 800;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.35s ease;
+  box-shadow: 0 5px 18px #2196f3aa;
+}
+
+button[type="submit"]:hover,
+button[type="submit"]:focus {
+  background: linear-gradient(135deg, #64b5f6, #2196f3);
+  outline: none;
+}

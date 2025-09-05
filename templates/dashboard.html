@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+{% endblock %}
+
+{% block content %}
+<h2>Your Survey History</h2>
+<table>
+    <thead>
+      <tr>
+          <th>Date</th>
+          <th>Risk</th>
+          <th>Sleep</th>
+          <th>Diet</th>
+          <th>Exercise</th>
+          <th>Stress</th>
+          <th>Social Media</th>
+          <th>Negative Emotions</th>
+          <th>Late Night</th>
+          <th>Engagement</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for survey in surveys %}
+      <tr>
+          <td>{{ survey.timestamp.strftime("%Y-%m-%d %H:%M") }}</td>
+          <td>{{ survey.result }}</td>
+          <td>{{ survey.sleep_hours }}</td>
+          <td>{{ survey.diet }}</td>
+          <td>{{ survey.exercise_frequency }}</td>
+          <td>{{ survey.stress_level }}</td>
+          <td>{{ survey.social_media_time }}</td>
+          <td>{{ survey.negative_emotions }}</td>
+          <td>{{ survey.late_night_scrolling }}</td>
+          <td>{{ survey.engagement_frequency }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

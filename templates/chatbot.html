@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='chatbot.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<h2 style="text-align: center;">Mental Health Chatbot</h2>
+
+<div id="chatbox"></div>
+
+<div class="input-area">
+  <input id="chat-input" type="text" placeholder="Ask me anything..." />
+  <button id="send-btn">Send</button>
+</div>
+
+<script>
+const chatbox = document.getElementById('chatbox');
+const input = document.getElementById('chat-input');
+const sendBtn = document.getElementById('send-btn');
+
+function appendMessage(msg, sender) {
+  const div = document.createElement('div');
+  div.classList.add(sender === 'user' ? 'user-msg' : 'bot-msg');
+  div.textContent = msg;
+  chatbox.appendChild(div);
+  chatbox.scrollTop = chatbox.scrollHeight;
+}
+
+sendBtn.onclick = async () => {
+  const msg = input.value.trim();
+  if (!msg) return;
+
+  appendMessage(msg, 'user');
+  input.value = '';
+
+  const typingDiv = document.createElement('div');
+  typingDiv.classList.add('bot-msg');
+  typingDiv.textContent = 'Bot is typing...';
+  chatbox.appendChild(typingDiv);
+
+  try {
+    const res = await fetch('/api/chatbot', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({message: msg})
+    });
+    const data = await res.json();
+
+    typingDiv.remove();
+
+    if (data && data.response) {
+      appendMessage(data.response, 'bot');
+    } else {
+      appendMessage('Sorry, no response received.', 'bot');
+    }
+  } catch (error) {
+    typingDiv.remove();
+    appendMessage('Sorry, error contacting the server.', 'bot');
+  }
+};
+
+input.addEventListener('keypress', e => {
+  if (e.key === 'Enter') sendBtn.click();
+});
+</script>
+{% endblock %}

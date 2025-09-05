@@ -1,0 +1,65 @@
+/* Login form styles */
+form {
+  max-width: 400px;
+  margin: 3rem auto;
+  background: white;
+  padding: 2.5rem 2rem;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgb(0 0 0 / 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+form h2 {
+  text-align: center;
+  margin-bottom: 1.7rem;
+  font-weight: 700;
+  color: #004d40;
+}
+
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.4rem;
+  font-size: 1.1rem;
+  border: 2px solid #c7d3d1;
+  border-radius: 10px;
+  transition: border-color 0.3s ease;
+  outline-offset: 2px;
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus {
+  border-color: #00796b;
+  box-shadow: 0 0 8px #4bb494aa;
+  outline: none;
+}
+
+button {
+  display: block;
+  width: 100%;
+  padding: 0.85rem;
+  background: linear-gradient(90deg, #54e6af 0%, #6a7afb 100%);
+  color: white;
+  font-weight: 700;
+  border: none;
+  font-size: 1.2rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgb(84 230 175 / 60%);
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover,
+button:focus {
+  background: linear-gradient(90deg, #6a7afb 0%, #54e6af 100%);
+  outline: none;
+}
+
+p.error-message {
+  color: #cc0000;
+  text-align: center;
+  margin-top: -1rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
