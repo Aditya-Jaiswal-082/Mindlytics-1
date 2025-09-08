@@ -1,4 +1,3 @@
-/* common.css */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: #f0f4f8;
@@ -15,7 +14,6 @@ main {
   box-shadow: 0 8px 18px rgba(0,0,0,0.1);
 }
 
-/* Basic Navbar base */
 .navbar {
   background: #004d40;
   padding: 1rem 2rem;

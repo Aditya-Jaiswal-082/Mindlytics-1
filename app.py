@@ -16,7 +16,6 @@ bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
-# Models
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -45,17 +44,14 @@ def load_user(user_id):
 with app.app_context():
     db.create_all()
 
-# Initialize ChatterBot with custom corpus training
 chatbot = ChatBot('MentalHealthBot',
                   storage_adapter='chatterbot.storage.SQLStorageAdapter',
                   database_uri='sqlite:///chatbot_db.sqlite3')
 
 trainer = ChatterBotCorpusTrainer(chatbot)
-# Comment next two lines after first successful training to speed up reloads
 trainer.train("chatterbot.corpus.english")
 trainer.train("./my_corpus.mental_health.yml")  # Your custom corpus path
 
-# Routes
 
 @app.route('/')
 def index():
@@ -201,7 +197,6 @@ def dashboard():
     surveys = SurveyResponse.query.filter_by(user_id=current_user.id).order_by(SurveyResponse.timestamp.desc()).all()
     return render_template('dashboard.html', surveys=surveys)
 
-# Helper to get latest survey profile for chatbot personalization
 def get_latest_user_profile(user_id):
     survey = SurveyResponse.query.filter_by(user_id=user_id).order_by(SurveyResponse.timestamp.desc()).first()
     if not survey:
@@ -211,7 +206,6 @@ def get_latest_user_profile(user_id):
         'stress_level': survey.stress_level,
     }
 
-# Chatbot API with hybrid rule-based override
 @app.route('/api/chatbot', methods=['POST'])
 @login_required
 def chatbot_api():
@@ -219,7 +213,6 @@ def chatbot_api():
     user_message = data.get('message', '').lower()
     profile = get_latest_user_profile(current_user.id)
 
-    # Rule-based personalized replies
     if any(kw in user_message for kw in ["sleep", "sleep cycle", "hours of sleep"]):
         sleep_hours = profile.get('sleep_hours')
         if sleep_hours:
@@ -236,11 +229,9 @@ def chatbot_api():
             reply = "I don't have your stress info yet. Please complete the survey."
         return jsonify({'response': reply})
 
-    # Default fallback to ChatterBot response
     bot_response = str(chatbot.get_response(user_message))
     return jsonify({'response': bot_response})
 
-# Chatbot frontend page route, named 'chatbot' for template url_for
 @app.route('/chatbot')
 @login_required
 def chatbot_view():
