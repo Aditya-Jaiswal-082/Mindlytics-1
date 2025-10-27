@@ -8,11 +8,14 @@ conversations:
 - - "What are some signs of depression"
   - "Signs include persistent sadness, loss of interest, and fatigue." 
 - - "Can you recommend some mental health resources"
+
 categories:
 - mental health
 - wellbeing
 - support
 
+categories:
+- mental health
 conversations:
 - - "can i improve my health"
   - "Absolutely! Maintaining regular sleep, a balanced diet, exercising, and mindful social media use really helps."
@@ -74,6 +77,9 @@ conversations:
 - - "how to sleep better"
   - "Maintain a consistent sleep schedule, avoid screens before bed, and create a comfortable sleeping environment."
 
+categories:
+- wellbeing
+conversations:
 - - "hey"
   - "Hello! How can I assist you with your mental health today?"
 

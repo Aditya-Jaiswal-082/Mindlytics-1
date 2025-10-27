@@ -7,6 +7,7 @@ from flask_bcrypt import Bcrypt
 from chatterbot import ChatBot
 from chatterbot.trainers import ChatterBotCorpusTrainer
 
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'change_this_secret')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
@@ -80,7 +81,7 @@ def login():
         user = User.query.filter_by(email=email).first()
         if user and bcrypt.check_password_hash(user.password_hash, password):
             login_user(user)
-            return redirect(url_for('dashboard'))
+            return redirect(url_for('index'))
         else:
             return render_template('login.html', error='Invalid email or password.')
     return render_template('login.html')
@@ -213,7 +214,7 @@ def chatbot_api():
     user_message = data.get('message', '').lower()
     profile = get_latest_user_profile(current_user.id)
 
-    if any(kw in user_message for kw in ["sleep", "sleep cycle", "hours of sleep"]):
+    if any(kw in user_message for kw in ["sleep cycle", "hours of sleep"]):
         sleep_hours = profile.get('sleep_hours')
         if sleep_hours:
             reply = f"Your last reported sleep duration was {sleep_hours} hours."

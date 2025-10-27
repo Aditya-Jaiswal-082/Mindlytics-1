@@ -2,13 +2,13 @@ table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 1rem;
-  box-shadow: 0 5px 10px rgba(0, 71, 50, 0.1);
+  box-shadow: 0 5px 10px rgba(255, 255, 255, 0.1);
   border-radius: 10px;
   overflow: hidden;
 }
 
 thead {
-  background-color: #00796b;
+  background-color: rgb(45, 48, 57);
   color: white;
   font-weight: bold;
 }
@@ -25,4 +25,6 @@ tbody tr:nth-child(even) {
 
 tbody tr:hover {
   background-color: #d1ede4;
-}
+  cursor: pointer;
+  transform: scale(1.02);
+  transition: transform 0.2s;}

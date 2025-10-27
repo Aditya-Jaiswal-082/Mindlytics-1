@@ -1,5 +1,113 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Welcome to the Mental Health Chatbot Web App</h2>
-<p>Track, assess, and improve your mental wellness with simple surveys and personalized advice.</p>
+
+<section class="welcome-section" role="banner" aria-labelledby="welcome-title">
+<h2> Welcome to the MINDLYTICS 🧠</h2>
+<p>Track, assess, and improve your mental wellness with simple surveys and personalized advice.</p> 
+</section>
+<section class="home-section" role="main">
+  <!-- Why Choose Mindlytics -->
+  <div class="section-header" aria-labelledby="why-mindlytics-title">
+    <h2 id="why-mindlytics-title" >Why Choose Mindlytics?</h2>
+    <p>Comprehensive mental health tracking and insights to support your wellness journey</p>
+  </div>
+
+  <div class="feature-cards" aria-label="Mindlytics features">
+    <article class="feature-card" aria-describedby="mood-tracking-desc">
+      <div class="feature-icon" aria-hidden="true" title="Mood Tracking Icon">🧠</div>
+      <div class="feature-content">
+        <h3>Mood Tracking</h3>
+        <p id="mood-tracking-desc">
+          Monitor your daily emotional patterns with our intuitive mood tracking system
+        </p>
+        <ul>
+          <li>Daily mood logging</li>
+          <li>Trend analysis</li>
+          <li>Trigger identification</li>
+        </ul>
+      </div>
+    </article>
+    <article class="feature-card" aria-describedby="analytics-dashboard-desc">
+      <div class="feature-icon" aria-hidden="true" title="Analytics Dashboard Icon">📈</div>
+      <div class="feature-content">
+        <h3>Analytics Dashboard</h3>
+        <p id="analytics-dashboard-desc">
+          Gain insights into your mental health patterns with detailed analytics
+        </p>
+        <ul>
+          <li>Progress visualization</li>
+          <li>Weekly reports</li>
+          <li>Goal tracking</li>
+        </ul>
+      </div>
+    </article>
+    <article class="feature-card" aria-describedby="professional-support-desc">
+      <div class="feature-icon" aria-hidden="true" title="Professional Support Icon">👨‍⚕️</div>
+      <div class="feature-content">
+        <h3>Professional Support</h3>
+        <p id="professional-support-desc">
+          Connect with licensed mental health professionals when you need support
+        </p>
+        <ul>
+          <li>Therapist matching</li>
+          <li>Secure messaging</li>
+          <li>Crisis support</li>
+        </ul>
+      </div>
+    </article>
+  </div>
+
+  <!-- Chatbot Helper Section -->
+  <div class="section-header" style="margin-top: 4rem;" aria-labelledby="chatbot-helps-title">
+    <h2 id="chatbot-helps-title">How Our Chatbot Helps</h2>
+    <p>
+      Our AI-powered mental health assistant provides personalized support through various therapeutic approaches and evidence-based techniques.
+    </p>
+  </div>
+
+  <div class="feature-cards" aria-label="Chatbot features">
+    <article class="feature-card" aria-describedby="active-listening-desc">
+      <div class="feature-icon" aria-hidden="true" title="Active Listening Icon">💬</div>
+      <div class="feature-content">
+        <h3>Active Listening</h3>
+        <p id="active-listening-desc">
+          Experience empathetic conversations with our AI that understands context, emotions, and provides thoughtful responses.
+        </p>
+        <ul>
+          <li>Emotion recognition</li>
+          <li>Context awareness</li>
+          <li>Non-judgmental responses</li>
+        </ul>
+      </div>
+    </article>
+    <article class="feature-card" aria-describedby="coping-strategies-desc">
+      <div class="feature-icon" aria-hidden="true" title="Coping Strategies Icon">💡</div>
+      <div class="feature-content">
+        <h3>Coping Strategies</h3>
+        <p id="coping-strategies-desc">
+          Get personalized coping mechanisms and therapeutic techniques tailored to your specific needs and situation.
+        </p>
+        <ul>
+          <li>Breathing exercises</li>
+          <li>Mindfulness techniques</li>
+          <li>Cognitive restructuring</li>
+        </ul>
+      </div>
+    </article>
+    <article class="feature-card" aria-describedby="progress-tracking-desc">
+      <div class="feature-icon" aria-hidden="true" title="Progress Tracking Icon">📊</div>
+      <div class="feature-content">
+        <h3>Progress Tracking</h3>
+        <p id="progress-tracking-desc">
+          Monitor your mental health journey with insights, mood tracking, and progress reports over time.
+        </p>
+        <ul>
+          <li>Mood analytics</li>
+          <li>Weekly reports</li>
+          <li>Goal setting</li>
+        </ul>
+      </div>
+    </article>
+  </div>
+</section>
 {% endblock %}

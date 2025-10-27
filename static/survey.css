@@ -1,5 +1,5 @@
 form {
-  max-width: 650px;
+  max-width: 750px;
   margin: 2rem auto;
   background: white;
   border-radius: 20px;
@@ -22,7 +22,7 @@ h2 {
 
 label {
   display: block;
-  font-weight: 700;
+  font-weight: 600;
   color: #023047;
   margin-bottom: 0.4rem;
 }
@@ -31,22 +31,23 @@ input[type="text"],
 input[type="number"],
 select {
   width: 100%;
-  padding: 0.6rem 1rem;
-  border: 2.8px solid #90caf9;
-  border-radius: 14px;
+  height: 40px;
+  padding: 0.6rem 1re50px  border: 2.8px solid rgb(45, 48, 57);
+  border-radius: 30px;
   box-shadow: 0 4px 10px rgb(144 202 249 / 30%);
   font-size: 1rem;
   font-weight: 600;
   color: #023047;
   outline-offset: 3px;
-  transition: border-color 0.3s ease-out;
+  transition:border-color 0.3s ease-out;
+  text-align:center;
 }
 
 input[type="text"]:focus,
 input[type="number"]:focus,
 select:focus {
-  border-color: #2196f3;
-  box-shadow: 0 0 15px #64b5f6cc;
+  border-color: rgb(45, 48, 57);
+  box-shadow: 0 0 15px rgb(45, 48, 57);
   outline: none;
 }
 
@@ -55,17 +56,17 @@ button[type="submit"] {
   padding: 1rem 0;
   border: none;
   border-radius: 28px;
-  background: linear-gradient(135deg, #2196f3, #64b5f6);
+  background: linear-gradient(15deg, #7c7ebe, rgb(45, 48, 57));
   color: white;
   font-weight: 800;
   font-size: 1.2rem;
   cursor: pointer;
   transition: background-color 0.35s ease;
-  box-shadow: 0 5px 18px #2196f3aa;
+  box-shadow: 0 5px 18px #000000aa;
 }
 
 button[type="submit"]:hover,
 button[type="submit"]:focus {
-  background: linear-gradient(135deg, #64b5f6, #2196f3);
+  background: linear-gradient(15deg, rgb(45, 48, 57), #7c7ebe);
   outline: none;
 }
