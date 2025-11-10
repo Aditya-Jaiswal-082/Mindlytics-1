@@ -4,40 +4,260 @@
 {% endblock %}
 
 {% block content %}
-<section class="chatbot-section">
-  <h2 class="chatbot-title">Mindlytics Health Chatbot</h2>
-
-  <div id="chatbox" class="chatbox"></div>
-
-  <div class="input-area">
-    <input id="chat-input" type="text" placeholder="Ask me anything..." autocomplete="off" />
-    <button id="send-btn">Send</button>
+<div class="chatbot-container">
+  <!-- Header -->
+  <div class="chat-header">
+    <div class="header-icon">🤖</div>
+    <div class="header-info">
+      <h2 class="header-title" id="bot-name">MindBot Assistant</h2>
+      <p class="header-status"><span class="status-dot"></span> Active</p>
+    </div>
+    <div class="header-actions">
+      <button class="icon-btn" id="notifications-btn" aria-label="Contact Support">🔔</button>
+      <button class="icon-btn" id="settings-btn" aria-label="Settings">⚙️</button>
+      <button class="icon-btn" id="menu-btn" aria-label="More options">⋮</button>
+    </div>
   </div>
-</section>
+
+  <!-- Initial Welcome Message -->
+  <div id="chatbox" class="chatbox">
+    <div class="bot-msg">
+      <div class="bot-avatar">🤖</div>
+      <div class="msg-content">
+        Hello! I'm here to support you with your mental health journey. How are you feeling today?
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Action Buttons -->
+  <div class="quick-actions">
+    <button class="action-btn" data-text="Sleep Cycle">Sleep Cycle</button>
+    <button class="action-btn" data-text="i feel lonely">lonely</button>
+    <button class="action-btn" data-text="is it normal to have mood swings">Mood swings</button>
+    <button class="action-btn security-btn"><span class="lock-icon">🔒</span> End-to-end encrypted</button>
+  </div>
+
+  <!-- Input Area -->
+  <div class="input-area">
+    <button class="attach-btn" aria-label="Attach file">📎</button>
+    <input id="chat-input" type="text" placeholder="Ask me anything..." autocomplete="off" />
+    <button id="send-btn" aria-label="Send message">
+      <span class="send-icon">✈️</span> Send
+    </button>
+  </div>
+</div>
+
+<!-- Settings Modal -->
+<div id="settings-modal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Settings</h3>
+      <button class="close-modal" id="close-settings">&times;</button>
+    </div>
+    <div class="modal-body">
+      <label for="bot-name-input">Chatbot Name:</label>
+      <input type="text" id="bot-name-input" placeholder="Enter bot name" value="MindBot Assistant">
+      <button id="save-bot-name" class="modal-btn">Save Name</button>
+      
+      <hr>
+      
+      <div class="setting-item">
+        <label>
+          <input type="checkbox" id="sound-toggle" checked>
+          Enable notification sounds
+        </label>
+      </div>
+      
+      <div class="setting-item">
+        <label>
+          <input type="checkbox" id="typing-indicator-toggle" checked>
+          Show typing indicator
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- More Options Menu -->
+<div id="more-menu" class="dropdown-menu">
+  <button class="menu-item" id="clear-chat">🗑️ Clear Chat History</button>
+  <button class="menu-item" id="download-chat">💾 Download Chat</button>
+  <button class="menu-item" id="report-issue">⚠️ Report an Issue</button>
+  <button class="menu-item" id="about-bot">ℹ️ About this Bot</button>
+</div>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   const chatbox = document.getElementById('chatbox');
   const input = document.getElementById('chat-input');
   const sendBtn = document.getElementById('send-btn');
+  const actionBtns = document.querySelectorAll('.action-btn:not(.security-btn)');
+  
+  // Header buttons
+  const notificationsBtn = document.getElementById('notifications-btn');
+  const settingsBtn = document.getElementById('settings-btn');
+  const menuBtn = document.getElementById('menu-btn');
+  
+  // Modals and menus
+  const settingsModal = document.getElementById('settings-modal');
+  const closeSettings = document.getElementById('close-settings');
+  const moreMenu = document.getElementById('more-menu');
+  const botNameInput = document.getElementById('bot-name-input');
+  const saveBotNameBtn = document.getElementById('save-bot-name');
+  const botNameDisplay = document.getElementById('bot-name');
+
+  // Load saved bot name from localStorage
+  const savedBotName = localStorage.getItem('botName');
+  if (savedBotName) {
+    botNameDisplay.textContent = savedBotName;
+    botNameInput.value = savedBotName;
+  }
+
+  // ===== HEADER BUTTON FUNCTIONS =====
+  
+  // Bell button - Redirect to contact page
+  notificationsBtn.addEventListener('click', () => {
+    window.location.href = "{{ url_for('contact') }}";
+  });
+
+  // Settings button - Open settings modal
+  settingsBtn.addEventListener('click', () => {
+    settingsModal.style.display = 'flex';
+    moreMenu.style.display = 'none';
+  });
+
+  // Close settings modal
+  closeSettings.addEventListener('click', () => {
+    settingsModal.style.display = 'none';
+  });
+
+  // Save bot name
+  saveBotNameBtn.addEventListener('click', () => {
+    const newName = botNameInput.value.trim() || 'MindBot Assistant';
+    botNameDisplay.textContent = newName;
+    localStorage.setItem('botName', newName);
+    settingsModal.style.display = 'none';
+    
+    // Show confirmation message
+    appendMessage(`Great! I'm now ${newName}. How can I help you today?`, 'bot');
+  });
+
+  // Three dots menu - Toggle dropdown
+  menuBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isVisible = moreMenu.style.display === 'block';
+    moreMenu.style.display = isVisible ? 'none' : 'block';
+    
+    // Position menu below button
+    const rect = menuBtn.getBoundingClientRect();
+    moreMenu.style.top = `${rect.bottom + 5}px`;
+    moreMenu.style.right = '24px';
+  });
+
+  // Close menus when clicking outside
+  document.addEventListener('click', () => {
+    moreMenu.style.display = 'none';
+  });
+
+  settingsModal.addEventListener('click', (e) => {
+    if (e.target === settingsModal) {
+      settingsModal.style.display = 'none';
+    }
+  });
+
+  // ===== MORE MENU FUNCTIONS =====
+  
+  // Clear chat history
+  document.getElementById('clear-chat').addEventListener('click', () => {
+    if (confirm('Are you sure you want to clear the chat history?')) {
+      chatbox.innerHTML = `
+        <div class="bot-msg">
+          <div class="bot-avatar">🤖</div>
+          <div class="msg-content">
+            Chat history cleared. How can I help you today?
+          </div>
+        </div>
+      `;
+      moreMenu.style.display = 'none';
+    }
+  });
+
+  // Download chat
+  document.getElementById('download-chat').addEventListener('click', () => {
+    const messages = Array.from(chatbox.querySelectorAll('.bot-msg, .user-msg'))
+      .map(msg => {
+        const sender = msg.classList.contains('user-msg') ? 'You' : botNameDisplay.textContent;
+        const text = msg.querySelector('.msg-content').textContent;
+        return `${sender}: ${text}`;
+      }).join('\n\n');
+    
+    const blob = new Blob([messages], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `chat-history-${new Date().toISOString().split('T')[0]}.txt`;
+    a.click();
+    URL.revokeObjectURL(url);
+    
+    moreMenu.style.display = 'none';
+  });
+
+  // Report issue
+  document.getElementById('report-issue').addEventListener('click', () => {
+    window.location.href = "{{ url_for('contact') }}?subject=Report%20Issue";
+    moreMenu.style.display = 'none';
+  });
+
+  // About bot
+  document.getElementById('about-bot').addEventListener('click', () => {
+    appendMessage('I am an AI-powered mental health support assistant. I use evidence-based therapeutic approaches to provide personalized support. Remember, I\'m here to help, but I\'m not a replacement for professional medical advice.', 'bot');
+    moreMenu.style.display = 'none';
+  });
+
+  // ===== CHAT FUNCTIONS =====
 
   function appendMessage(msg, sender) {
-    const div = document.createElement('div');
-    div.classList.add(sender === 'user' ? 'user-msg' : 'bot-msg');
-    div.textContent = msg;
-    chatbox.appendChild(div);
+    const msgDiv = document.createElement('div');
+    msgDiv.classList.add(sender === 'user' ? 'user-msg' : 'bot-msg');
+    
+    if (sender === 'bot') {
+      const avatar = document.createElement('div');
+      avatar.classList.add('bot-avatar');
+      avatar.textContent = '🤖';
+      msgDiv.appendChild(avatar);
+    }
+    
+    const content = document.createElement('div');
+    content.classList.add('msg-content');
+    content.textContent = msg;
+    msgDiv.appendChild(content);
+    
+    if (sender === 'user') {
+      const avatar = document.createElement('div');
+      avatar.classList.add('user-avatar');
+      avatar.textContent = '👤';
+      msgDiv.appendChild(avatar);
+    }
+    
+    chatbox.appendChild(msgDiv);
     chatbox.scrollTop = chatbox.scrollHeight;
   }
 
-  async function sendMessage() {
-    const msg = input.value.trim();
+  async function sendMessage(message = null) {
+    const msg = message || input.value.trim();
     if (!msg) return;
+    
     appendMessage(msg, 'user');
-    input.value = '';
+    if (!message) input.value = '';
 
     const typingDiv = document.createElement('div');
-    typingDiv.classList.add('bot-msg', 'typing');
-    typingDiv.textContent = 'Bot is typing...';
+    typingDiv.classList.add('bot-msg', 'typing-indicator');
+    typingDiv.innerHTML = `
+      <div class="bot-avatar">🤖</div>
+      <div class="msg-content typing">
+        <span></span><span></span><span></span>
+      </div>
+    `;
     chatbox.appendChild(typingDiv);
     chatbox.scrollTop = chatbox.scrollHeight;
 
@@ -57,9 +277,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  sendBtn.addEventListener('click', sendMessage);
+  sendBtn.addEventListener('click', () => sendMessage());
   input.addEventListener('keypress', e => {
     if (e.key === 'Enter') sendMessage();
+  });
+
+  actionBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const text = btn.getAttribute('data-text');
+      sendMessage(text);
+    });
   });
 });
 </script>
