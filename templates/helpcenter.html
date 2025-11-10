@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="page-hero">
+  <h1>Help Center</h1>
+  <p>Find answers to common questions and get the support you need</p>
+</section>
+
+<section class="help-section">
+  <div class="help-categories">
+    <div class="help-category">
+      <h2>📖 Getting Started</h2>
+      <ul>
+        <li><a href="#">How do I create an account?</a></li>
+        <li><a href="#">Setting up your profile</a></li>
+        <li><a href="#">Understanding the dashboard</a></li>
+        <li><a href="#">First steps with mood tracking</a></li>
+      </ul>
+    </div>
+
+    <div class="help-category">
+      <h2>💬 Using the Chatbot</h2>
+      <ul>
+        <li><a href="#">How does the AI chatbot work?</a></li>
+        <li><a href="#">What can I ask the chatbot?</a></li>
+        <li><a href="#">Is my conversation private?</a></li>
+        <li><a href="#">When should I talk to a human therapist instead?</a></li>
+      </ul>
+    </div>
+
+    <div class="help-category">
+      <h2>📊 Tracking & Analytics</h2>
+      <ul>
+        <li><a href="#">How to log your daily mood</a></li>
+        <li><a href="#">Understanding your analytics dashboard</a></li>
+        <li><a href="#">Setting wellness goals</a></li>
+        <li><a href="#">Exporting your data</a></li>
+      </ul>
+    </div>
+
+    <div class="help-category">
+      <h2>🔒 Privacy & Security</h2>
+      <ul>
+        <li><a href="#">How is my data protected?</a></li>
+        <li><a href="#">Who can see my information?</a></li>
+        <li><a href="#">HIPAA compliance information</a></li>
+        <li><a href="#">Deleting your account and data</a></li>
+      </ul>
+    </div>
+
+    <div class="help-category">
+      <h2>💳 Billing & Subscription</h2>
+      <ul>
+        <li><a href="#">Pricing plans explained</a></li>
+        <li><a href="#">How to upgrade or downgrade</a></li>
+        <li><a href="#">Refund policy</a></li>
+        <li><a href="#">Managing payment methods</a></li>
+      </ul>
+    </div>
+
+    <div class="help-category">
+      <h2>🆘 Crisis Support</h2>
+      <ul>
+        <li><a href="#">Immediate crisis resources</a></li>
+        <li><a href="#">24/7 helpline numbers</a></li>
+        <li><a href="#">When to seek emergency help</a></li>
+        <li><a href="#">Supporting someone in crisis</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="contact-support">
+    <h2>Still need help?</h2>
+    <p>Our support team is here for you. Contact us and we'll get back to you within 24 hours.</p>
+    <a href="{{ url_for('contact') }}" class="btn-primary">Contact Support</a>
+  </div>
+</section>
+
+{% endblock %}

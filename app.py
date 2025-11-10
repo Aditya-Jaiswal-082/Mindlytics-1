@@ -1,6 +1,6 @@
 import os
 from datetime import datetime
-from flask import Flask, render_template, redirect, url_for, request, jsonify
+from flask import Flask, render_template, redirect, url_for, request, jsonify, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user, UserMixin
 from flask_bcrypt import Bcrypt
@@ -24,6 +24,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(128), nullable=False)
 
+
 class SurveyResponse(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
@@ -38,12 +39,16 @@ class SurveyResponse(db.Model):
     result = db.Column(db.String(10))
     timestamp = db.Column(db.DateTime)
 
+
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
+    # Fixed: Use db.session.get() instead of deprecated Query.get()
+    return db.session.get(User, int(user_id))
+
 
 with app.app_context():
     db.create_all()
+
 
 chatbot = ChatBot('MentalHealthBot',
                   storage_adapter='chatterbot.storage.SQLStorageAdapter',
@@ -54,9 +59,12 @@ trainer.train("chatterbot.corpus.english")
 trainer.train("./my_corpus.mental_health.yml")  # Your custom corpus path
 
 
+# ========== ROUTES ==========
+
 @app.route('/')
 def index():
     return render_template('index.html')
+
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -73,6 +81,7 @@ def signup():
         return redirect(url_for('login'))
     return render_template('signup.html')
 
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -86,11 +95,13 @@ def login():
             return render_template('login.html', error='Invalid email or password.')
     return render_template('login.html')
 
+
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
 
 @app.route('/survey', methods=['GET', 'POST'])
 @login_required
@@ -130,6 +141,89 @@ def survey():
 
     return render_template('survey.html')
 
+
+@app.route('/dashboard')
+@login_required
+def dashboard():
+    surveys = SurveyResponse.query.filter_by(user_id=current_user.id).order_by(SurveyResponse.timestamp.desc()).all()
+    return render_template('dashboard.html', surveys=surveys)
+
+
+@app.route('/chatbot')
+@login_required
+def chatbot_view():
+    return render_template('chatbot.html')
+
+
+@app.route('/api/chatbot', methods=['POST'])
+@login_required
+def chatbot_api():
+    data = request.get_json()
+    user_message = data.get('message', '').lower()
+    profile = get_latest_user_profile(current_user.id)
+
+    if any(kw in user_message for kw in ["sleep cycle", "hours of sleep"]):
+        sleep_hours = profile.get('sleep_hours')
+        if sleep_hours:
+            reply = f"Your last reported sleep duration was {sleep_hours} hours."
+        else:
+            reply = "I don't have your sleep data yet. Please complete the survey."
+        return jsonify({'response': reply})
+
+    elif any(kw in user_message for kw in ["stress", "anxiety", "stressed"]):
+        stress = profile.get('stress_level')
+        if stress:
+            reply = f"Your last reported stress level was {stress}. Remember to take breaks and relax."
+        else:
+            reply = "I don't have your stress info yet. Please complete the survey."
+        return jsonify({'response': reply})
+
+    bot_response = str(chatbot.get_response(user_message))
+    return jsonify({'response': bot_response})
+
+
+# New Pages Routes
+@app.route('/features')
+def features():
+    return render_template('features.html')
+
+
+@app.route('/blog')
+def blog():
+    return render_template('blog.html')
+
+
+@app.route('/helpcenter')
+def helpcenter():
+    return render_template('helpcenter.html')
+
+
+@app.route('/community')
+def community():
+    return render_template('community.html')
+
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+
+@app.route('/contact', methods=['GET', 'POST'])
+def contact():
+    if request.method == 'POST':
+        name = request.form.get('name')
+        email = request.form.get('email')
+        subject = request.form.get('subject')
+        message = request.form.get('message')
+        
+        # TODO: Add email sending or database saving logic here
+        flash('Thank you for contacting us! We will get back to you soon.', 'success')
+        return redirect(url_for('contact'))
+    
+    return render_template('contact.html')
+
+
+# ========== HELPER FUNCTIONS ==========
 
 def assess_risk(sleep_hours, diet, exercise_frequency, stress_level,
                 social_media_time, negative_emotions, late_night_scrolling, engagement_frequency):
@@ -192,12 +286,6 @@ def get_tips(risk, sleep_hours, diet, exercise_frequency, stress_level,
     return tips
 
 
-@app.route('/dashboard')
-@login_required
-def dashboard():
-    surveys = SurveyResponse.query.filter_by(user_id=current_user.id).order_by(SurveyResponse.timestamp.desc()).all()
-    return render_template('dashboard.html', surveys=surveys)
-
 def get_latest_user_profile(user_id):
     survey = SurveyResponse.query.filter_by(user_id=user_id).order_by(SurveyResponse.timestamp.desc()).first()
     if not survey:
@@ -207,43 +295,9 @@ def get_latest_user_profile(user_id):
         'stress_level': survey.stress_level,
     }
 
-@app.route('/api/chatbot', methods=['POST'])
-@login_required
-def chatbot_api():
-    data = request.get_json()
-    user_message = data.get('message', '').lower()
-    profile = get_latest_user_profile(current_user.id)
 
-    if any(kw in user_message for kw in ["sleep cycle", "hours of sleep"]):
-        sleep_hours = profile.get('sleep_hours')
-        if sleep_hours:
-            reply = f"Your last reported sleep duration was {sleep_hours} hours."
-        else:
-            reply = "I don't have your sleep data yet. Please complete the survey."
-        return jsonify({'response': reply})
-
-    elif any(kw in user_message for kw in ["stress", "anxiety", "stressed"]):
-        stress = profile.get('stress_level')
-        if stress:
-            reply = f"Your last reported stress level was {stress}. Remember to take breaks and relax."
-        else:
-            reply = "I don't have your stress info yet. Please complete the survey."
-        return jsonify({'response': reply})
-
-    bot_response = str(chatbot.get_response(user_message))
-    return jsonify({'response': bot_response})
-
-@app.route('/chatbot')
-@login_required
-def chatbot_view():
-    return render_template('chatbot.html')
-
-app.add_url_rule('/chatbot', endpoint='chatbot', view_func=login_required(chatbot_view))
-
+# ========== RUN APP ==========
 
 if __name__ == '__main__':
-    import os
-
-if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))  # default to 5000 if PORT unset
-    app.run(host='0.0.0.0', port=port)        # bind to all interfaces
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=True)

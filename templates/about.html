@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="page-hero">
+  <h1>About Mindlytics</h1>
+  <p>Empowering mental wellness through technology and compassion</p>
+</section>
+
+<section class="about-section">
+  <div class="about-story">
+    <h2>Our Story</h2>
+    <p>Mindlytics was founded in 2024 with a simple yet powerful mission: to make mental health support accessible to everyone, everywhere. We recognized that traditional mental health services often come with barriers—long wait times, high costs, and stigma—that prevent people from getting the help they need.</p>
+    <p>Our platform combines cutting-edge AI technology with evidence-based therapeutic approaches to provide immediate, personalized support. Whether you're dealing with daily stress, anxiety, depression, or simply want to improve your overall mental wellness, Mindlytics is here for you.</p>
+  </div>
+
+  <div class="about-mission">
+    <h2>Our Mission</h2>
+    <p>To democratize mental health support by providing accessible, affordable, and effective tools that empower individuals to take control of their mental wellness journey.</p>
+  </div>
+
+  <div class="about-values">
+    <h2>Our Values</h2>
+    <div class="values-grid">
+      <div class="value-card">
+        <h3>🔒 Privacy First</h3>
+        <p>Your data is yours. We use industry-leading encryption and never share your personal information.</p>
+      </div>
+      <div class="value-card">
+        <h3>❤️ Compassion</h3>
+        <p>Every interaction is designed with empathy, understanding, and non-judgment at its core.</p>
+      </div>
+      <div class="value-card">
+        <h3>📚 Evidence-Based</h3>
+        <p>Our approaches are grounded in scientific research and proven therapeutic methods.</p>
+      </div>
+      <div class="value-card">
+        <h3>🌍 Accessibility</h3>
+        <p>Mental health support should be available to everyone, regardless of location or circumstance.</p>
+      </div>
+      <div class="value-card">
+        <h3>🚀 Innovation</h3>
+        <p>We continuously improve our technology to provide the best possible support.</p>
+      </div>
+      <div class="value-card">
+        <h3>🤝 Community</h3>
+        <p>We believe in the power of connection and peer support in the healing journey.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="about-team">
+    <h2>Our Team</h2>
+    <p>Mindlytics is built by a diverse team of mental health professionals, AI researchers, designers, and engineers who are passionate about making a difference. Our clinical advisory board includes licensed therapists, psychiatrists, and counselors who ensure our platform meets the highest standards of care.</p>
+  </div>
+
+  <div class="about-contact">
+    <h2>Get in Touch</h2>
+    <p>Have questions or want to learn more? We'd love to hear from you.</p>
+    <a href="{{ url_for('contact') }}" class="btn-primary">Contact Us</a>
+  </div>
+</section>
+
+{% endblock %}

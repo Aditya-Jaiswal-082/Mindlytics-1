@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="page-hero">
+  <h1>Community</h1>
+  <p>Connect with others on their mental wellness journey</p>
+</section>
+
+<section class="community-section">
+  <div class="community-intro">
+    <h2>Welcome to the Mindlytics Community</h2>
+    <p>You're not alone in your mental health journey. Our community is a safe, supportive space where you can share experiences, find encouragement, and connect with others who understand.</p>
+  </div>
+
+  <div class="community-guidelines">
+    <h3>Community Guidelines</h3>
+    <ul>
+      <li>🤝 <strong>Be respectful:</strong> Treat everyone with kindness and empathy</li>
+      <li>🔒 <strong>Maintain privacy:</strong> Don't share personal identifying information</li>
+      <li>💬 <strong>Stay supportive:</strong> Offer encouragement, not medical advice</li>
+      <li>🚫 <strong>No judgment:</strong> Everyone's journey is unique and valid</li>
+      <li>⚠️ <strong>Report concerns:</strong> Help us keep the community safe</li>
+    </ul>
+  </div>
+
+  <div class="community-forums">
+    <h2>Discussion Forums</h2>
+    
+    <div class="forum-card">
+      <h3>💬 General Support</h3>
+      <p>Share your experiences and connect with others navigating mental health challenges.</p>
+      <div class="forum-stats">
+        <span>1,247 members</span>
+        <span>•</span>
+        <span>89 posts this week</span>
+      </div>
+    </div>
+
+    <div class="forum-card">
+      <h3>🧘 Mindfulness & Meditation</h3>
+      <p>Discuss mindfulness practices, meditation techniques, and share peaceful moments.</p>
+      <div class="forum-stats">
+        <span>892 members</span>
+        <span>•</span>
+        <span>54 posts this week</span>
+      </div>
+    </div>
+
+    <div class="forum-card">
+      <h3>😰 Anxiety Support</h3>
+      <p>A safe space to discuss anxiety, panic attacks, and coping strategies.</p>
+      <div class="forum-stats">
+        <span>1,456 members</span>
+        <span>•</span>
+        <span>127 posts this week</span>
+      </div>
+    </div>
+
+    <div class="forum-card">
+      <h3>🌙 Depression Support</h3>
+      <p>Connect with others who understand the challenges of living with depression.</p>
+      <div class="forum-stats">
+        <span>1,123 members</span>
+        <span>•</span>
+        <span>98 posts this week</span>
+      </div>
+    </div>
+
+    <div class="forum-card">
+      <h3>🎯 Wellness Goals</h3>
+      <p>Share your goals, celebrate wins, and stay accountable together.</p>
+      <div class="forum-stats">
+        <span>673 members</span>
+        <span>•</span>
+        <span>41 posts this week</span>
+      </div>
+    </div>
+
+    <div class="forum-card">
+      <h3>👥 Peer Support Groups</h3>
+      <p>Join facilitated support groups meeting weekly on specific topics.</p>
+      <div class="forum-stats">
+        <span>445 members</span>
+        <span>•</span>
+        <span>12 active groups</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="community-cta">
+    <h2>Ready to join the conversation?</h2>
+    <p>Create an account to participate in our supportive community.</p>
+    <a href="{{ url_for('signup') }}" class="btn-primary">Join Community</a>
+  </div>
+</section>
+
+{% endblock %}

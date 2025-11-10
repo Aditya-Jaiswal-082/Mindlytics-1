@@ -3,9 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Mental Health App</title>
-
   <link rel="stylesheet" href="{{ url_for('static', filename='common.css') }}">
-
   {% block css %}{% endblock %}
 </head>
 <body>
@@ -13,5 +11,6 @@
   <main>
     {% block content %}{% endblock %}
   </main>
+  {% include 'footer.html' %}
 </body>
 </html>
